@@ -5,8 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Link as LinkRs } from "react-scroll";
-import AnimatedNumbers from "react-animated-numbers";
+import dynamic from "next/dynamic";
 
+const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), {
+  ssr: false,
+});
 const stats = [
   { id: "experience", value: 6, label: "Years Of Experience" },
   { id: "projects", value: 150, label: "Completed Projects" },
