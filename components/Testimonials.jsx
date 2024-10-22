@@ -1,11 +1,16 @@
 "use client";
 import { testimonies } from "@/data";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
 import { FaStar } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const settings = {
   slidesPerView: 1,
@@ -23,9 +28,32 @@ const settings = {
 };
 
 const Testimonials = () => {
+  const ref = useRef();
+
+  useGSAP(
+    () => {
+      gsap
+        .timeline({
+          delay: 0.5,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "20% bottom",
+            end: "bottom top",
+          },
+        })
+        .from(".section__header .sub__title", {
+          opacity: 0,
+          x: -30,
+        })
+        .from(".testimonial", { opacity: 0, y: 30, stagger: 0.5 });
+    },
+    { scope: ref }
+  );
+
   return (
     <section
       id="testimonials"
+      ref={ref}
       className="overflow-hidden relative h-[450px] max-md:h-auto py-[50px] bg-[rgba(var(--bg-secondary-rgb),0.8)] before:absolute before:w-1/4 before:h-full before:top-0 before:z-[2] before:left-0 before:bg-gradient-to-l before:from-transparent before:to-[--bg-secondary] after:absolute after:w-1/4 after:h-full after:top-0 after:z-[2] after:right-0 after:bg-gradient-to-r after:from-transparent after:to-[--bg-secondary]"
     >
       <div className="section__header">
@@ -40,7 +68,7 @@ const Testimonials = () => {
         {testimonies.map((list) => (
           <SwiperSlide
             key={list.name}
-            className="!h-fit max-w-[60%] bg-[--bg-secondary] p-10 shadow rounded-[2rem] relative"
+            className="testimonial !h-fit max-w-[60%] bg-[--bg-secondary] p-10 shadow rounded-[2rem] relative"
           >
             <div className="flex items-center gap-[10px] mb-[30px]">
               <div className="profile">

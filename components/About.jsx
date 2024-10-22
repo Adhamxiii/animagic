@@ -3,13 +3,18 @@
 import { me } from "@/public";
 import Window from "@/public/Window";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
 import CodeBlock from "./CodeBlock";
 import GridWireframe from "@/public/GridWireFrame";
 import { techStack } from "@/data";
 import Grid from "@/public/Grid";
 import CardUi from "@/public/CardUi";
 import { Link } from "react-scroll";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const code = `
     firstName : "Adham",
@@ -24,10 +29,28 @@ const code = `
 `;
 
 const About = () => {
+  const ref = useRef();
+
+  useGSAP(
+    () => {
+      gsap
+        .timeline({
+          delay: 0.5,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "20% bottom",
+            end: "bottom top",
+          },
+        })
+        .from(".box", { opacity: 0, y: 30, stagger: 0.5 });
+    },
+    { scope: ref }
+  );
+
   return (
-    <section id="about">
+    <section id="about" ref={ref}>
       <div className="container grid max-md:grid-cols-1 grid-cols-3 gap-[30px]">
-        <div className="bg-[--bg-secondary] rounded-3xl shadow py-5 relative overflow-hidden max-md:items-start">
+        <div className="box bg-[--bg-secondary] rounded-3xl shadow py-5 relative overflow-hidden max-md:items-start">
           <div className="spotlight !w-[180px] !right-0" />
           <div className="p-5 relative z-[2] gap-5">
             <div className="flex items-center gap-[10px] mb-5 bg-[rgba(var(--bg-base-rgb),0.8)] p-[10px] rounded-3xl">
@@ -53,7 +76,7 @@ const About = () => {
           />
         </div>
 
-        <div className="col-span-2 max-md:col-span-1 bg-[--bg-secondary] rounded-3xl shadow py-5 relative overflow-hidden">
+        <div className="col-span-2 max-md:col-span-1 box bg-[--bg-secondary] rounded-3xl shadow py-5 relative overflow-hidden">
           <div className="spotlight !w-[180px] !right-0" />
           <div className="flex max-md:flex-col p-5 relative z-[2] gap-5 ">
             <CodeBlock code={code} language="javascript" />
@@ -79,7 +102,7 @@ const About = () => {
           />
         </div>
 
-        <div className="col-span-2 max-md:col-span-1 bg-[--bg-secondary] rounded-3xl shadow py-5 relative overflow-hidden">
+        <div className="col-span-2 max-md:col-span-1 box bg-[--bg-secondary] rounded-3xl shadow py-5 relative overflow-hidden">
           <div className="p-5 relative z-[2] gap-5">
             <div className="column">
               <h2 className="sub__title">
@@ -110,7 +133,7 @@ const About = () => {
           />
         </div>
 
-        <div className="bg-[--bg-secondary] flex__center bg-[url('../public/bg1.jpg')] bg-[length:100%_100%] bg-no-repeat text-center">
+        <div className="box bg-[--bg-secondary] flex__center bg-[url('../public/bg1.jpg')] bg-[length:100%_100%] bg-no-repeat text-center">
           <div className="p-5 relative z-[2] gap-5">
             <h2 className="text__white sub__title">
               I&apos;m Committed to Collaboration and Clear Communication

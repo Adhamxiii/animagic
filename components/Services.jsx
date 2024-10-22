@@ -1,12 +1,43 @@
 "use client";
 import { services } from "@/data";
-import React from "react";
+import React, { useRef } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-scroll";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Services = () => {
+  const ref = useRef();
+
+  useGSAP(
+    () => {
+      gsap
+        .timeline({
+          delay: 0.5,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "20% bottom",
+            end: "bottom top",
+          },
+        })
+        .from(
+          [".section__header .sub__title", ".section__header .description"],
+          {
+            opacity: 0,
+            y: 30,
+            stagger: 0.5,
+          }
+        )
+        .from(".service", { opacity: 0, y: 30, stagger: 0.5 });
+    },
+    { scope: ref }
+  );
+
   return (
-    <section id="services" className="bg__secondary">
+    <section id="services" className="bg__secondary" ref={ref}>
       <div className="relative z-[2] container w-full">
         <div className="section__header">
           <h2 className="sub__title text-center">
@@ -22,7 +53,7 @@ const Services = () => {
           {services.map((service) => (
             <div
               key={service.name}
-              className="flex__center flex-col py-[50px] px-5 bg-[rgba(var(--bg-secondary-rgb),0.5)] backdrop-blur-[50px] overflow-hidden rounded-3xl border-[0.5px] border-solid border-[#464444]"
+              className="service flex__center flex-col py-[50px] px-5 bg-[rgba(var(--bg-secondary-rgb),0.5)] backdrop-blur-[50px] overflow-hidden rounded-3xl border-[0.5px] border-solid border-[#464444]"
             >
               <div className="spotlight !w-[40%]" />
               <div className="icon__container !size-20 !m-auto !mb-10 !relative rounded-full !border border-solid !border-[#464444] !text-3xl bg-[--bg-base]">

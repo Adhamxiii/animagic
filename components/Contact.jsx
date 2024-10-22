@@ -1,13 +1,43 @@
+"use client";
+
 import { contactInfo } from "@/data";
 import ListOptionUi from "@/public/ListOptionUi";
-import React from "react";
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
+  const ref = useRef();
+
+  useGSAP(
+    () => {
+      gsap
+        .timeline({
+          delay: 0.5,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "20% bottom",
+            end: "bottom top",
+          },
+        })
+        .from("#contact .box", {
+          opacity: 0,
+          y: 30,
+          stagger: 0.5,
+        })
+        .from(".contact__form", { opacity: 0, x: 30 });
+    },
+    { scope: ref }
+  );
+
   return (
-    <section id="contact" className="container">
+    <section id="contact" className="container" ref={ref}>
       <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[30px]">
         <div className="left__column">
-          <div className="bg-[--bg-secondary] shadow rounded-3xl overflow-hidden mb-[30px] relative">
+          <div className="box bg-[--bg-secondary] shadow rounded-3xl overflow-hidden mb-[30px] relative">
             <div className="p-5 z-[2]">
               <h2 className="sub__title leading-tight">
                 Let’s <span className="primary">create something</span> amazing
@@ -20,7 +50,7 @@ const Contact = () => {
             </div>
             <ListOptionUi className="absolute z-[1] -right-[10px] -bottom-[20px] w-1/2 h-auto" />
           </div>
-          <div className="bg-[--bg-secondary] shadow rounded-3xl overflow-hidden bg-[url('../public/bg2.png')] bg-[length:100%_100%] bg-no-repeat">
+          <div className="box bg-[--bg-secondary] shadow rounded-3xl overflow-hidden bg-[url('../public/bg2.png')] bg-[length:100%_100%] bg-no-repeat">
             <div className="p-5 z-[2]">
               {contactInfo.map((contact, i) => (
                 <div
@@ -40,7 +70,7 @@ const Contact = () => {
           </div>
         </div>
 
-        <form className="p-5 w-full bg-[--bg-secondary] shadow rounded-3xl overflow-hidden relative">
+        <form className="contact__form p-5 w-full bg-[--bg-secondary] shadow rounded-3xl overflow-hidden relative">
           <div className="spotlight !w-[170px] !h-[100px] right-0 -bottom-[30px]" />
           <h2 className="sub__title">
             Let’s work <span className="primary">together!</span>

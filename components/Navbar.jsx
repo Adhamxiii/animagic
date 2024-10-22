@@ -19,7 +19,7 @@ const Navbar = () => {
   const navClasses = useMemo(() => {
     return `flex__center ${
       showNavbar ? "drop" : ""
-    } justify-between absolute top-5 left-1/2 -translate-x-1/2 max-w-fit z-50 ${
+    } !justify-between absolute top-5 left-1/2 -translate-x-1/2 max-w-fit z-50 ${
       isDark ? "bg-[#171719]" : "bg-white"
     } bg-opacity-50 px-4 py-2 rounded-xl backdrop-blur-[50px] border-[--gray-border] border border-solid max-md:max-w-full max-md:w-[90%]`;
   }, [showNavbar, isDark]);
@@ -72,7 +72,7 @@ const Navbar = () => {
             </div>
           </label>
           <div
-            className="icon__container hidden max-md:flex"
+            className="icon__container !hidden max-md:!flex"
             onClick={() => setOpenSidebar(!openSidebar)}
           >
             <TiThMenu />
