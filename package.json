@@ -24,6 +24,7 @@
     "react-scroll": "^1.9.0",
     "react-syntax-highlighter": "^15.6.1",
     "respinner": "^4.0.3",
+    "sharp": "^0.33.5",
     "swiper": "^11.1.14"
   },
   "devDependencies": {
