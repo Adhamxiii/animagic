@@ -36,7 +36,7 @@ This is my personal portfolio website, showcasing my skills, recent projects, an
 2. Navigate into the project directory:
 
    ```bash
-   cd wheel-master-academy
+   cd animagic
    ```
 
 3. Install the dependencies:
