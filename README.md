@@ -75,7 +75,7 @@ Contributions are welcome! Please follow these steps to contribute:
 
 ## Live Demo
 
-You can access the live version of Wheel Master Academy [here](https://animagic-five.vercel.app/).
+You can access the live version of animagic [here](https://animagic-five.vercel.app/).
 
 ### Contact Me
 
